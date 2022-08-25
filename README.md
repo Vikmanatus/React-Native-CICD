@@ -1,3 +1,3 @@
 # React-Native-CICD
 
-Please refer to `develop` branch ❤️
+A simple example app to show of we can do continuous integration and continuous deployment on React-Native applications
