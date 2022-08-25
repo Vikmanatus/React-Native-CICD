@@ -1,0 +1,13 @@
+platform :android do
+  desc "Update Android code version and build number"
+  lane :update_android_version do |options|
+    sh "echo 'Going to update Android code version and build number'"
+  end
+end
+
+platform :ios do
+    desc "Update iOS version code and build number"
+    lane :update_ios_version do |options|
+      sh "echo 'Going to update iOS version code and build number'"
+    end
+end

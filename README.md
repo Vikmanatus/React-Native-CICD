@@ -29,3 +29,10 @@ yarn run android
 ```
 
 
+## Setting up `fastlane`
+
+At root folder, please open a terminal and paste the following command:
+
+```bash
+bundle install
+```

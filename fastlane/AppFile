@@ -1,0 +1,7 @@
+# app_identifier "com.example.app" # The bundle identifier of your app
+apple_id ENV["APPLE_ACCOUNT"]  # Your Apple email address
+# team_name "Team"
+# team_id "Q2CBPJ58CA"
+# To select a team for App Store Connect use
+# itc_team_name "Company"
+# itc_team_id "18742801"
