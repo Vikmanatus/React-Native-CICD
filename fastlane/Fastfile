@@ -1,3 +1,42 @@
+def get_versioning_element(key)
+  versioning_element = sh "cd ../ && node ./scripts/build/scripts/versioning.js --required " + key
+  return versioning_element.gsub("\n", "")
+end
+
+desc "Formatting version numbers for production release"
+lane :format_versioning_element do |options|
+  sh "cd ../ && node ./scripts/build/scripts/format.version.number.js --required " + options[:key]
+  compile_versioning_scripts
+end
+
+desc "Synchronizing if required and incrementing version numbers for App Center release"
+lane :sync_and_update_versioning_element do |options|
+  sh "cd ../ && node ./scripts/build/scripts/sync.versioning.js"
+  sh "cd ../ && node ./scripts/build/scripts/increment.version.js --required " + options[:key]
+  compile_versioning_scripts
+end
+
+desc "Installing versioning scripts dependencies"
+lane :install_versioning_dependencies do
+  sh "cd ../ && cd ./scripts && yarn install"
+end
+
+desc "Compiling Typescripts version handling files to Javascript"
+lane :compile_versioning_scripts do
+  sh "cd ../ && cd ./scripts && tsc"
+end
+
+desc "Check version file integrity"
+lane :check_versioning_integrity do
+  compile_versioning_scripts
+  if ENV["CI"]
+    sh "cd ../ && node ./scripts/build/scripts/version.error.handling.js"
+  elsif ENV["FASTLANE_LOCAL_ENV"]
+    print("\nAs we are in local fastlane environment, you have already requested on which platform the release is wanted, so we can skip the check of the toDeploy array\n")
+    sh "cd ../ && node ./scripts/build/scripts/version.error.handling.js --skip-to-deploy-check"
+  end
+end
+
 platform :android do
   desc "Check Play Console API access"
   lane :check_play_store_api_access do |options|
@@ -10,9 +49,35 @@ platform :android do
     gradle(task: options[:release_type], build_type: "Release", project_dir: "./android")
   end
 
+  desc "Fetch AppCenter latest release"
+  lane :check_appcenter_latest_release_info do |options|
+    appcenter_fetch_version_number(
+      api_token: ENV["APPCENTER_ANDROID_TOKEN"],
+      owner_name: ENV["APPCENTER_OWNER"],
+      app_name: ENV["APPCENTER_ANDROID_APPNAME"],
+      version: "variable permettant de récupérer les fichiers de version.json", # optional, don't set this value to get the last upload of all versions
+    )
+  end
+
   desc "Update Android code version and build number"
   lane :update_android_version do |options|
-    sh "echo 'Going to update Android code version and build number'"
+    if ENV["DEPLOYMENT_ANDROID"] == "appcenter" || ENV["DEPLOYMENT_ANDROID"] == "dev"
+      sync_and_update_versioning_element(key: "code-version")
+    elsif ENV["DEPLOYMENT_ANDROID"] == "release"
+      format_versioning_element(key: "code-version")
+    end
+    version_number = get_versioning_element("version-number")
+    code_version = get_versioning_element("code-version")
+    print("Version number:", version_number)
+    print("Code version:", code_version)
+
+  end
+
+  desc "Release Android application"
+  lane :release do |options|
+    install_versioning_dependencies
+    check_versioning_integrity
+    update_android_version
   end
 end
 

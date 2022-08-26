@@ -1,0 +1,6 @@
+{
+  "version": [0, 0, 1],
+  "releaseIos": "0000100",
+  "releaseAndroid": "0000100",
+  "toDeploy": []
+}
