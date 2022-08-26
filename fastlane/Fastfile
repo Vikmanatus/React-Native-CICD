@@ -1,4 +1,15 @@
 platform :android do
+  desc "Check Play Console API access"
+  lane :check_play_store_api_access do |options|
+    validate_play_store_json_key
+  end
+
+  desc "Compile Android release in chosen type passed by parameter"
+  lane :compile_android_app do |options|
+    gradle(task: "clean", project_dir: "./android")
+    gradle(task: options[:release_type], build_type: "Release", project_dir: "./android")
+  end
+
   desc "Update Android code version and build number"
   lane :update_android_version do |options|
     sh "echo 'Going to update Android code version and build number'"
@@ -6,8 +17,8 @@ platform :android do
 end
 
 platform :ios do
-    desc "Update iOS version code and build number"
-    lane :update_ios_version do |options|
-      sh "echo 'Going to update iOS version code and build number'"
-    end
+  desc "Update iOS version code and build number"
+  lane :update_ios_version do |options|
+    sh "echo 'Going to update iOS version code and build number'"
+  end
 end

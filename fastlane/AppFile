@@ -5,3 +5,4 @@ apple_id ENV["APPLE_ACCOUNT"]  # Your Apple email address
 # To select a team for App Store Connect use
 # itc_team_name "Company"
 # itc_team_id "18742801"
+json_key_file("./etc/android-deployment-key.json")

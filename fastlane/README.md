@@ -15,6 +15,22 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 ## Android
 
+### android check_play_store_api_access
+
+```sh
+[bundle exec] fastlane android check_play_store_api_access
+```
+
+Check Play Console API access
+
+### android compile_android_app
+
+```sh
+[bundle exec] fastlane android compile_android_app
+```
+
+Compile Android release in chosen type passed by parameter
+
 ### android update_android_version
 
 ```sh
@@ -22,6 +38,19 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 ```
 
 Update Android code version and build number
+
+----
+
+
+## iOS
+
+### ios update_ios_version
+
+```sh
+[bundle exec] fastlane ios update_ios_version
+```
+
+Update iOS version code and build number
 
 ----
 
