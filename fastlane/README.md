@@ -13,6 +13,49 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 # Available Actions
 
+### format_versioning_element
+
+```sh
+[bundle exec] fastlane format_versioning_element
+```
+
+Formatting version numbers for production release
+
+### sync_and_update_versioning_element
+
+```sh
+[bundle exec] fastlane sync_and_update_versioning_element
+```
+
+Synchronizing if required and incrementing version numbers for App Center release
+
+### install_versioning_dependencies
+
+```sh
+[bundle exec] fastlane install_versioning_dependencies
+```
+
+Installing versioning scripts dependencies
+
+### compile_versioning_scripts
+
+```sh
+[bundle exec] fastlane compile_versioning_scripts
+```
+
+Compiling Typescripts version handling files to Javascript
+
+### check_versioning_integrity
+
+```sh
+[bundle exec] fastlane check_versioning_integrity
+```
+
+Check version file integrity
+
+----
+
+
 ## Android
 
 ### android check_play_store_api_access
@@ -31,6 +74,14 @@ Check Play Console API access
 
 Compile Android release in chosen type passed by parameter
 
+### android check_appcenter_latest_release_info
+
+```sh
+[bundle exec] fastlane android check_appcenter_latest_release_info
+```
+
+Fetch AppCenter latest release
+
 ### android update_android_version
 
 ```sh
@@ -38,6 +89,14 @@ Compile Android release in chosen type passed by parameter
 ```
 
 Update Android code version and build number
+
+### android release
+
+```sh
+[bundle exec] fastlane android release
+```
+
+Release Android application
 
 ----
 

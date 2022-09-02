@@ -7,7 +7,11 @@
  */
 
 import {isArgumentValid, readFilePromise, writeFilePromise} from './utils';
-import {AuthorizedArguments, AuthorizedValues, VersionFileType} from './utils/types';
+import {
+  AuthorizedArguments,
+  AuthorizedValues,
+  VersionFileType,
+} from './utils/types';
 
 const fileName = './version.json';
 const ENCODING = 'utf8';
@@ -28,14 +32,19 @@ readFilePromise(fileName, ENCODING)
   .then(data => {
     const parsedJson: VersionFileType = JSON.parse(data);
 
-    const isIosIncrementRequired = isArgumentValid(AuthorizedValues.BUILD_NUMBER, ARGS)
+    const isIosIncrementRequired = isArgumentValid(
+      AuthorizedValues.BUILD_NUMBER,
+      ARGS,
+    )
       ? incrementStringifiedNumeber(parsedJson.releaseIos)
       : parsedJson.releaseIos;
     const isAndroidIncrementRequired = isArgumentValid(
-      AuthorizedValues.CODE_VERSION, ARGS
+      AuthorizedValues.CODE_VERSION,
+      ARGS,
     )
       ? incrementStringifiedNumeber(parsedJson.releaseAndroid)
       : parsedJson.releaseAndroid;
+    console.log('REWRITTING VALUES');
     const values: VersionFileType = {
       ...parsedJson,
       releaseIos: isIosIncrementRequired,
@@ -55,10 +64,18 @@ readFilePromise(fileName, ENCODING)
     throw Error(error.message);
   });
 
-const incrementStringifiedNumeber = (value: string) => {
-  const incrementedValue = parseInt(value, 10) + 1;
-  if (value.charAt(0) === '0') {
-    return `0${incrementedValue}`;
+const incrementStringifiedNumeber = (value: string): string => {
+  console.log({value});
+  const is_debug_version = value.match(/^0+(?=\d)/g)?.length;
+  if (is_debug_version) {
+    const count_zero_occurences = value.match(/^0*/g);
+    if (count_zero_occurences) {
+      const extract_zero = count_zero_occurences.pop() || '';
+      return `${extract_zero}${
+        parseInt(value.slice(extract_zero.length, value.length), 10) + 1
+      }`;
+    }
   }
+  const incrementedValue = parseInt(value, 10) + 1;
   return incrementedValue.toString();
 };
