@@ -1,17 +1,17 @@
 module Fastlane
   module Actions
     module SharedValues
-      INCREMENT_ANDROID_VERSIONING_CUSTOM_VALUE = :INCREMENT_ANDROID_VERSIONING_CUSTOM_VALUE
+      FORMAT_VERSIONING_CUSTOM_VALUE = :FORMAT_VERSIONING_CUSTOM_VALUE
     end
 
-    class IncrementAndroidVersioningAction < Action
+    class FormatVersioningAction < Action
       def self.run(params)
         # fastlane will take care of reading in the parameter and fetching the environment variable:
         UI.message "Parameter API Token: #{params[:api_token]}"
 
         # sh "shellcommand ./path"
 
-        # Actions.lane_context[SharedValues::INCREMENT_ANDROID_VERSIONING_CUSTOM_VALUE] = "my_val"
+        # Actions.lane_context[SharedValues::FORMAT_VERSIONING_CUSTOM_VALUE] = "my_val"
       end
 
       #####################################################
@@ -34,14 +34,14 @@ module Fastlane
         # Below a few examples
         [
           FastlaneCore::ConfigItem.new(key: :api_token,
-                                       env_name: "FL_INCREMENT_ANDROID_VERSIONING_API_TOKEN", # The name of the environment variable
-                                       description: "API Token for IncrementAndroidVersioningAction", # a short description of this parameter
+                                       env_name: "FL_FORMAT_VERSIONING_API_TOKEN", # The name of the environment variable
+                                       description: "API Token for FormatVersioningAction", # a short description of this parameter
                                        verify_block: proc do |value|
-                                          UI.user_error!("No API token for IncrementAndroidVersioningAction given, pass using `api_token: 'token'`") unless (value and not value.empty?)
+                                          UI.user_error!("No API token for FormatVersioningAction given, pass using `api_token: 'token'`") unless (value and not value.empty?)
                                           # UI.user_error!("Couldn't find file at path '#{value}'") unless File.exist?(value)
                                        end),
           FastlaneCore::ConfigItem.new(key: :development,
-                                       env_name: "FL_INCREMENT_ANDROID_VERSIONING_DEVELOPMENT",
+                                       env_name: "FL_FORMAT_VERSIONING_DEVELOPMENT",
                                        description: "Create a development certificate instead of a distribution one",
                                        is_string: false, # true: verifies the input is a string, false: every kind of value
                                        default_value: false) # the default value if the user didn't provide one
@@ -52,7 +52,7 @@ module Fastlane
         # Define the shared values you are going to provide
         # Example
         [
-          ['INCREMENT_ANDROID_VERSIONING_CUSTOM_VALUE', 'A description of what this value contains']
+          ['FORMAT_VERSIONING_CUSTOM_VALUE', 'A description of what this value contains']
         ]
       end
 
