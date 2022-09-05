@@ -66,11 +66,20 @@ platform :android do
     elsif ENV["DEPLOYMENT_ANDROID"] == "release"
       format_versioning_element(key: "code-version")
     end
-    version_number = get_versioning_element("version-number")
-    code_version = get_versioning_element("code-version")
-    print("Version number:", version_number)
-    print("Code version:", code_version)
 
+    version_number_android = String(get_versioning_element("version-number"))
+    code_version = String(get_versioning_element("code-version")).to_i()
+
+    gradleFile = "./android/app/build.gradle"
+
+    android_set_version_code(
+      gradle_file: gradleFile,
+      version_code: code_version,
+    )
+    android_set_version_name(
+      gradle_file: gradleFile,
+      version_name: version_number_android,
+    )
   end
 
   desc "Release Android application"
@@ -78,6 +87,27 @@ platform :android do
     install_versioning_dependencies
     check_versioning_integrity
     update_android_version
+    # filename=""
+    # if ENV["DEPLOYMENT_ANDROID"] == "appcenter" || ENV["DEPLOYMENT_ANDROID"] == "dev"
+    #   filename="react-native-cicd-V" +  version_number + "-" + code_version + ".apk"
+    #   compile_android_app(release_type: "assemble")
+    #   sh "rm -f ../" + filename
+    #   sh "cp ../android/app/build/outputs/apk/release/app-release.apk ../" + filename
+    #   appcenter_upload(
+    #     api_token: ENV["APPCENTER_ANDROID_TOKEN"],
+    #     owner_name: ENV["APPCENTER_OWNER"],
+    #     owner_type: "user",
+    #     app_name: ENV["APPCENTER_ANDROID_APPNAME"],
+    #     file: filename,
+    #     notify_testers: true,
+    #   )
+    # elsif ENV["DEPLOYMENT_ANDROID"] == "release"
+    #   filename="react-native-cicd-V" +  version_number + "-" + code_version + ".aab"
+    #   compile_android_app(release_type: "bundle")
+    #   sh "rm -f ../" + filename
+    #   sh "cp ../android/app/build/outputs/bundle/release/app-release.aab ../" + filename
+    #   # Release to play store later
+    # end
   end
 end
 
