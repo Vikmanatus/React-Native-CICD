@@ -5,3 +5,4 @@
 gem 'fastlane-plugin-appcenter'
 gem 'fastlane-plugin-versioning_android'
 gem 'fastlane-plugin-versioning'
+gem 'fastlane-plugin-automated_versioning', path: '../../fastlane-plugin-automated_versioning'

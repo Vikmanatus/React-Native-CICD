@@ -84,6 +84,7 @@ platform :android do
 
   desc "Release Android application"
   lane :release do |options|
+    automated_versioning
     # install_versioning_dependencies
     # check_versioning_integrity
     # update_android_version
