@@ -84,9 +84,9 @@ platform :android do
 
   desc "Release Android application"
   lane :release do |options|
-    install_versioning_dependencies
-    check_versioning_integrity
-    update_android_version
+    # install_versioning_dependencies
+    # check_versioning_integrity
+    # update_android_version
     # filename=""
     # if ENV["DEPLOYMENT_ANDROID"] == "appcenter" || ENV["DEPLOYMENT_ANDROID"] == "dev"
     #   filename="react-native-cicd-V" +  version_number + "-" + code_version + ".apk"
