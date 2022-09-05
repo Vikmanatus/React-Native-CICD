@@ -1,3 +1,0 @@
-lane :test do
-  automated_versioning
-end
