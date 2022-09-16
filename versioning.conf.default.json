@@ -1,0 +1,20 @@
+{
+  "version_number_rules": {
+    // Has to be at least 2 digits, can go up to 4
+    "number_of_digits": 3
+  },
+  "build_number_rules": {
+    "version_number_formating": true,
+    "rules": {
+      "keep_project_pattern": false,
+      "regular_digits": false // Will be true only if version_number_formating & keep_project_pattern are set to false
+    }
+  },
+  "code_version_rules": {
+    "version_number_formating": true,
+    "rules": {
+      "keep_project_pattern": false,
+      "regular_digits": false
+    }
+  }
+}

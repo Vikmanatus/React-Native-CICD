@@ -84,7 +84,9 @@ platform :android do
 
   desc "Release Android application"
   lane :release do |options|
-    automated_versioning
+    create_versioning_config
+    # Checking versioning file integrity
+    #check_versioning_config(gradle_file_path: "./android/app/build.gradle", xcode_project_path: "./ios/ReactNativeCICD.xcodeproj")
     # install_versioning_dependencies
     # check_versioning_integrity
     # update_android_version
@@ -116,5 +118,9 @@ platform :ios do
   desc "Update iOS version code and build number"
   lane :update_ios_version do |options|
     sh "echo 'Going to update iOS version code and build number'"
+  end
+  lane :release do
+    # Checking versioning file integrity
+    check_versioning_config(gradle_file_path: "./android/app/build.gradle", xcode_project_path: "./ios/ReactNativeCICD.xcodeproj")
   end
 end
